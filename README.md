@@ -1,25 +1,28 @@
-📚 Study Recommendation System
+📚 SMART STUDY COMPANION
 
-A smart study companion that recommends what to study based on your mood and focus level.
+A Flask-based web app that recommends what subject to study based on your current mood and focus level.
+It uses a trained machine learning model to make suggestions instead of random selection.
 
-🌟 Overview
+Overview
 
-This project combines machine learning + web development to solve a simple but real problem:
+This project combines machine learning and web development to solve a simple problem: deciding what to study at a given moment.
+Users input their mood and focus level, and the system predicts a suitable subject.
 
-"What should I study right now?"
+Features
 
-Instead of choosing randomly, the system analyzes your current mood and focus level and suggests a subject using a trained ML model.
+Add and manage subjects
 
-⚙️ Features
+Log study sessions
 
-✔ Add and manage your own subjects
-✔ Log study session details
-✔ ML-powered subject recommendation
-✔ Safe handling of unknown subjects
-✔ Clean and minimal user interface
-✔ Local database integration
+ML-based subject recommendation
 
-🧠 How the Recommendation Works
+Validation to prevent unknown subject predictions
+
+Clean modal-based UI
+
+SQLite database integration
+
+How It Works
 
 The model was trained using:
 
@@ -29,32 +32,14 @@ Focus level
 
 Perceived difficulty
 
-Hour of the day
+Hour of day
 
 Weekday
 
 Study duration
 
-The predicted subject is cross-checked with the user’s added subjects before being displayed.
+The predicted subject is verified against the user’s managed subjects before being displayed.
 
-🛠 Tech Stack
+Tech Stack
 
-Backend
-
-Python
-
-Flask
-
-SQLite
-
-Machine Learning
-
-scikit-learn
-
-Pandas
-
-Frontend
-
-HTML
-
-CSS
+Python, Flask, scikit-learn, Pandas, SQLite, HTML, CSS
