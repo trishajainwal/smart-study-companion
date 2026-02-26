@@ -1,0 +1,169 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h2 class="page-title">📖 Your Weekly Study Overview</h2>
+
+<!-- Stacked Bar Chart -->
+<section class="chart-wrapper large" id="weeklyChart">
+    <canvas></canvas>
+</section>
+
+<!-- Side by side Pie + Scatter -->
+<section class="chart-grid">
+    <div class="chart-wrapper small" id="subjectPieChart">
+        <canvas></canvas>
+    </div>
+    <div class="chart-wrapper small" id="moodFocusScatter">
+        <canvas></canvas>
+        <p id="quote" class="chart-quote">
+            ✨ Keep up the good work! Consistency beats intensity.
+        </p>
+    </div>
+</section>
+
+<style>
+/* Page Title */
+.page-title {
+    text-align: center;
+    margin-bottom: 28px;
+    font-size: 2rem;
+    font-weight: 600;
+    color: #2c3e50;
+    letter-spacing: 0.5px;
+}
+
+/* Background */
+body {
+    background: linear-gradient(135deg, #f9f9fb, #eef3f8);
+    font-family: "Segoe UI", sans-serif;
+}
+
+/* Chart Wrapper */
+.chart-wrapper {
+    background: #fff;
+    border-radius: 14px;
+    padding: 16px;
+    box-shadow: 0 3px 12px rgba(0,0,0,0.06);
+    transition: transform 0.2s ease;
+}
+.chart-wrapper:hover {
+    transform: translateY(-3px);
+}
+
+/* Large chart (bar) */
+.chart-wrapper.large {
+    max-width: 760px;
+    margin: 0 auto 40px auto;
+    height: 360px;
+}
+
+/* Grid for smaller charts */
+.chart-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 32px;
+    justify-content: center;
+    align-items: start;
+    margin-bottom: 40px;
+}
+
+/* Small charts */
+.chart-wrapper.small {
+    height: 280px;
+}
+
+/* Canvas fills container */
+.chart-wrapper canvas {
+    width: 100% !important;
+    height: 100% !important;
+}
+
+/* Quote Styling */
+.chart-quote {
+    text-align: center;
+    margin-top: 12px;
+    font-style: italic;
+    color: #4c6a92;
+    font-size: 0.95rem;
+}
+
+/* Responsive tweaks */
+@media (max-width: 768px) {
+    .chart-grid {
+        gap: 20px;
+    }
+}
+</style>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+async function fetchWeeklyData() {
+    const res = await fetch("/weekly-data");
+    return await res.json();
+}
+
+fetchWeeklyData().then(data => {
+    // --- Stacked Bar Chart ---
+    const weeklyCtx = document.querySelector("#weeklyChart canvas").getContext("2d");
+    const weeklyData = {
+        labels: data.dates,
+        datasets: data.stackedDatasets.map(d => ({
+            label: d.label,
+            data: d.data,
+            backgroundColor: d.backgroundColor
+        }))
+    };
+    new Chart(weeklyCtx, {
+        type: "bar",
+        data: weeklyData,
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { position: "bottom" },
+                title: { display: true, text: "Weekly Study Duration", font: { size: 16 } }
+            },
+            scales: { x: { stacked: true }, y: { stacked: true, beginAtZero: true } }
+        }
+    });
+
+    // --- Pie Chart ---
+    const pieCtx = document.querySelector("#subjectPieChart canvas").getContext("2d");
+    new Chart(pieCtx, {
+        type: "pie",
+        data: {
+            labels: data.subjects,
+            datasets: [{ data: data.subjectDurations, backgroundColor: data.subjectColors }]
+        },
+        options: { responsive: true, maintainAspectRatio: false }
+    });
+
+    // --- Scatter Plot ---
+    const scatterCtx = document.querySelector("#moodFocusScatter canvas").getContext("2d");
+    const scatterData = {
+        datasets: [{
+            label: "Mood vs Focus",
+            data: data.dates.map((d, i) => ({ x: data.focus[i], y: data.mood[i] })),
+            backgroundColor: "#4dc9f6"
+        }]
+    };
+    new Chart(scatterCtx, {
+        type: "scatter",
+        data: scatterData,
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false },
+                title: { display: true, text: "Mood vs Focus", font: { size: 14 } }
+            },
+            scales: {
+                x: { title: { display: true, text: "Focus" }, min: 0, max: 5, ticks: { stepSize: 1 } },
+                y: { title: { display: true, text: "Mood" }, min: 0, max: 5, ticks: { stepSize: 1 } }
+            }
+        }
+    });
+});
+</script>
+
+{% endblock %}

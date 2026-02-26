@@ -1,0 +1,98 @@
+import pandas as pd
+from src.database import get_connection
+
+# Helper: load all study sessions as DataFrame
+def load_sessions():
+    conn = get_connection()
+    df = pd.read_sql("SELECT * FROM study_sessions", conn)
+    conn.close()
+    df['date'] = pd.to_datetime(df['date'], errors='coerce')
+    return df.dropna(subset=['date'])
+
+
+# Weekly Stacked Bar (Daily/Weekly Study Duration)
+def weekly_stacked_data():
+    df = load_sessions()
+    if df.empty:
+        return {"labels": [], "datasets": []}
+
+    # Use last 7 days
+    last_week = df['date'].max() - pd.Timedelta(days=6)
+    df = df[df['date'] >= last_week].sort_values('date')
+
+    # Prepare labels (dates)
+    labels = df['date'].dt.strftime('%d %b').unique().tolist()
+    
+    # Subjects
+    subjects = sorted(df['subject'].unique())
+    dataset_dict = {subject: [0]*len(labels) for subject in subjects}
+    topic_dict = {subject: [[] for _ in labels] for subject in subjects}
+    label_index = {label:i for i,label in enumerate(labels)}
+
+    # Fill dataset values and topics
+    for _, row in df.iterrows():
+        idx = label_index[row['date'].strftime('%d %b')]
+        dataset_dict[row['subject']][idx] += row['duration_minutes']
+        topic_dict[row['subject']][idx].append(row['topic'])
+
+    # Pastel colors
+    pastel_colors = ["#FFDAB9", "#FFB6C1", "#B0E0E6", "#AFEEEE", "#E6E6FA", "#F5DEB3"]
+
+    datasets = []
+    for i, subject in enumerate(subjects):
+        datasets.append({
+            "label": subject,
+            "data": dataset_dict[subject],
+            "backgroundColor": pastel_colors[i % len(pastel_colors)],
+            "topics": topic_dict[subject]
+        })
+
+    return {"labels": labels, "datasets": datasets}
+
+
+# Mood & Focus Trend (Multi-line chart)
+def mood_focus_trend():
+    df = load_sessions()
+    if df.empty:
+        return {"labels": [], "datasets": [], "quote": ""}
+
+    last_week = df['date'].max() - pd.Timedelta(days=6)
+    df = df[df['date'] >= last_week].sort_values('date')
+    labels = df['date'].dt.strftime('%d %b').tolist()
+
+    mood = df['mood'].tolist()
+    focus = df['focus_level'].tolist()
+
+    # Personalized quote
+    if mood[-1] >= 5 and focus[-1] >= 5:
+        quote = "You’re on fire! Keep the streak alive 🔥"
+    elif mood[-1] < 5 and focus[-1] >= 5:
+        quote = "Brains working hard, don’t forget breaks 🧠💪"
+    elif mood[-1] >= 5 and focus[-1] < 5:
+        quote = "Feeling good! Let’s channel it into focus 💡"
+    else:
+        quote = "Time to recharge, you’ve got this 🌱"
+
+    datasets = [
+        {"label": "Mood", "data": mood, "borderColor": "#FF8C00", "fill": False, "tension":0.2},
+        {"label": "Focus", "data": focus, "borderColor": "#1E90FF", "fill": False, "tension":0.2}
+    ]
+
+    return {"labels": labels, "datasets": datasets, "quote": quote}
+
+
+# Subject-wise Study Distribution (Donut chart)
+def subject_distribution():
+    df = load_sessions()
+    if df.empty:
+        return {"labels": [], "datasets": []}
+
+    pivot = df.groupby('subject')['duration_minutes'].sum()
+    labels = pivot.index.tolist()
+    data = pivot.values.tolist()
+
+    pastel_colors = ["#FFDAB9", "#FFB6C1", "#B0E0E6", "#AFEEEE", "#E6E6FA", "#F5DEB3"]
+
+    datasets = [{"data": data, "backgroundColor": [pastel_colors[i % len(pastel_colors)] for i in range(len(labels))]}]
+
+    return {"labels": labels, "datasets": datasets}

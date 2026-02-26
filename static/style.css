@@ -1,0 +1,352 @@
+/* 🌿 Overall Styling */
+body {
+    background: #f8f9fb;
+    font-family: 'Inter', sans-serif;
+    margin: 0;
+    padding: 0;
+    color: #333;
+}
+/* 🌿 Center Home page content */
+.home-page-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: calc(100vh - 70px); /* subtract navbar height */
+    text-align: center;
+}
+
+.home-page-container h1 {
+    margin-bottom: 10px;
+}
+
+.home-page-container p {
+    max-width: 600px;
+    margin: 0 auto 20px auto;
+    line-height: 1.6;
+}
+
+/* Center home buttons */
+.home-page-container .home-buttons {
+    justify-content: center;
+}
+
+/* Center home buttons */
+.home-buttons {
+    justify-content: center;
+}
+
+.page-container {
+    max-width: 680px;
+    margin: 40px auto;
+    padding: 20px;
+}
+
+.page-title {
+    font-size: 32px;
+    font-weight: 600;
+    color: #4c6a92;
+    text-align: center;
+}
+
+.page-subtitle {
+    margin-top: -10px;
+    color: #666;
+    font-size: 15px;
+    text-align: center;
+}
+/* 🌿 Navbar */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 24px;
+    background-color: #ffffff;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.nav-logo {
+    font-size: 20px;
+    font-weight: 600;
+    color: #4c6a92;
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+    margin: 0;
+    padding: 0;
+}
+
+.nav-links li a {
+    text-decoration: none;
+    color: #4c6a92;
+    font-weight: 500;
+    transition: color 0.2s;
+}
+
+.nav-links li a:hover {
+    color: #7aa6d2;
+}
+
+/* 🌱 Home buttons */
+.home-buttons {
+    display: flex;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.btn {
+    text-decoration: none;
+    padding: 10px 18px;
+    border-radius: 10px;
+    background-color: #7aa6d2;
+    color: white;
+    font-weight: 500;
+    transition: background 0.2s;
+}
+
+.btn:hover {
+    background-color: #6c9ac4;
+}
+
+.btn.secondary {
+    background-color: #ccc;
+    color: #333;
+}
+
+.btn.secondary:hover {
+    background-color: #bbb;
+}
+
+
+/* 🎨 Card */
+.form-card {
+    background: white;
+    padding: 25px;
+    margin-top: 20px;
+    border-radius: 18px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+}
+
+/* 📝 Input Styles */
+.form-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    font-weight: 500;
+    margin-bottom: 6px;
+}
+
+input, select, textarea {
+    padding: 12px;
+    border-radius: 10px;
+    border: 1px solid #d8dfe8;
+    outline: none;
+    font-size: 14px;
+    transition: all 0.2s;
+}
+
+input:focus, select:focus, textarea:focus {
+    border-color: #7aa6d2;
+    box-shadow: 0 0 0 3px rgba(122,166,210,0.2);
+}
+
+/* 🌱 Button */
+.submit-btn {
+    width: 100%;
+    background: #7aa6d2;
+    padding: 12px;
+    border: none;
+    border-radius: 12px;
+    color: white;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.submit-btn:hover {
+    background: #6c9ac4;
+}
+
+/* Icons */
+.submit-btn i {
+    margin-right: 8px;
+}
+
+/* Sticky wrapper near navbar */
+#suggestion-wrapper {
+    position: fixed;
+    top: 70px; /* adjust for your navbar height */
+    right: 20px;
+    width: 260px;
+    font-family: 'Arial', sans-serif;
+    z-index: 1000;
+}
+
+/* Toggle Button */
+#suggest-toggle {
+    width: 50%;
+    background-color: #456882;
+    color: white;
+    padding: 10px 15px;
+    margin-left: 25%;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background 0.3s;
+}
+#suggest-toggle:hover {
+    background-color: transparent;
+    color: #456882;
+}
+
+/* Suggestion Card (hidden initially, slides down) */
+#suggestion-card {
+    margin-top: 10px;
+    padding: 20px;
+    background-color: #f0f4f8;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    display: flex;
+    flex-direction: column;
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    transition: all 0.4s ease;
+}
+
+#suggestion-card.show {
+    max-height: 300px; /* enough to fit content */
+    opacity: 1;
+}
+
+/* Card labels & inputs */
+#suggestion-card label {
+    margin-top: 10px;
+    font-size: 14px;
+}
+#suggestion-card input[type=range] {
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+/* Suggest button */
+#suggestion-card button {
+    margin-top: 10px;
+    background-color: #2196F3;
+    color: white;
+    border: none;
+    padding: 8px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+}
+#suggestion-card button:hover {
+    background-color: #1976d2;
+}
+
+/* Modal */
+.modal-overlay {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.4);
+    display: none; /* hide initially */
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+}
+#recommendation-modal {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.4);
+    display: none; /* MUST hide initially */
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+}
+.modal-box {
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    width: 300px;
+    text-align: center;
+}
+.close-btn {
+    background: #ccc;
+    color: black;
+    margin-top: 10px;
+    border: none;
+    padding: 8px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.dashboard-container {
+    max-width: 1000px;
+    margin: auto;
+    padding: 40px 20px;
+}
+
+.dashboard-header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+}
+
+.card {
+    background: #ffffff;
+    padding: 25px;
+    border-radius: 16px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+}
+
+.hidden-section {
+    display: none;
+}
+
+.primary-btn {
+    background: #4c6ef5;
+    color: white;
+    border: none;
+    padding: 10px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.secondary-btn {
+    background: #e7f0ff;
+    border: none;
+    padding: 8px 14px;
+    border-radius: 8px;
+    margin-top: 10px;
+    cursor: pointer;
+}
+
+.delete-btn {
+    background: none;
+    border: none;
+    color: #ff4d4d;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.subject-item {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 8px;
+}

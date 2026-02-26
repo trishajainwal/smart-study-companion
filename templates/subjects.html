@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="page-container">
+
+    <h1 class="page-title">Manage Subjects</h1>
+
+    <form method="POST" class="form-card">
+        <div class="form-group">
+            <label>Add Subject</label>
+            <input type="text" name="subject_name" required>
+        </div>
+        <button type="submit" class="submit-btn">Add</button>
+    </form>
+
+    <div class="form-card" style="margin-top:20px;">
+        <h3>Available Subjects</h3>
+        <ul>
+            {% for subject in subjects %}
+                <li>
+                    {{ subject }}
+                    {% if subject in ml_supported %}
+                        <span style="color:green;">(ML Supported)</span>
+                    {% endif %}
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+
+</div>
+
+{% endblock %}

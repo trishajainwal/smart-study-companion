@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="page-container">
+
+    <div class="hero-section">
+        <h1 class="page-title">Welcome to Smart Study Companion</h1>
+        <p class="page-subtitle">
+            Track your progress, manage your subjects, or get a smart study suggestion.
+        </p>
+
+        <div class="hero-actions">
+            <button id="suggest-toggle" class="ghost-btn">Need a suggestion?</button>
+        </div>
+    </div>
+
+    <!-- Suggestion Card -->
+    <div id="suggestion-card" class="suggestion-card">
+        <label for="mood">Mood (1–5)</label>
+        <input type="range" id="mood" min="1" max="5" value="3">
+
+        <label for="focus">Focus (1–5)</label>
+        <input type="range" id="focus" min="1" max="5" value="3">
+
+        <button id="suggest-btn" class="primary-btn" style="margin-top:15px;">
+            Get Suggested Subject
+        </button>
+    </div>
+
+    <!-- Modal -->
+    <div id="recommendation-modal" class="modal-overlay">
+        <div class="modal-box">
+            <h3>Recommended Subject</h3>
+            <p id="modal-subject"></p>
+            <p id="modal-reason"></p>
+
+            <button id="modal-close" class="secondary-btn">Close</button>
+        </div>
+    </div>
+
+</div>
+
+<script>
+const toggleBtn = document.getElementById("suggest-toggle");
+const suggestionCard = document.getElementById("suggestion-card");
+
+toggleBtn.addEventListener("click", () => {
+    suggestionCard.classList.toggle("show");
+});
+
+const mood = document.getElementById("mood");
+const focus = document.getElementById("focus");
+const suggestBtn = document.getElementById("suggest-btn");
+const modal = document.getElementById("recommendation-modal");
+const modalSubject = document.getElementById("modal-subject");
+const modalReason = document.getElementById("modal-reason");
+const modalClose = document.getElementById("modal-close");
+
+suggestBtn.addEventListener("click", async () => {
+    const formData = new FormData();
+    formData.append("mood", mood.value);
+    formData.append("focus", focus.value);
+
+    const res = await fetch("/suggest-subject", { method: "POST", body: formData });
+    const data = await res.json();
+
+    if (data.subject) {
+        modalSubject.textContent = "Subject: " + data.subject;
+    } else {
+        modalSubject.textContent = "No subject available";
+    }
+
+    modalReason.textContent = data.reason;
+    modal.style.display = "flex";
+});
+
+modalClose.addEventListener("click", () => modal.style.display = "none");
+
+modal.addEventListener("click", (e) => {
+    if (e.target === modal) modal.style.display = "none";
+});
+</script>
+
+{% endblock %}
