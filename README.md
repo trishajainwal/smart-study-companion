@@ -1,36 +1,78 @@
-📚 SMART STUDY COMPANION
+# 📚 Smart Study Companion
 
-A Flask-based web app that recommends what subject to study based on your current mood and focus level.
-It uses a trained machine learning model to make suggestions instead of random selection.
+A full-stack **Flask** web application that intelligently recommends what subject to study based on behavioral patterns such as mood, focus level, and time-based features.
 
-OVERVIEW
+The application logs study sessions, stores data in a database, and uses a trained machine learning model to generate personalized subject suggestions.
 
-This project combines machine learning and web development to solve a simple problem: deciding what to study at a given moment.
+---
 
-*Users input their mood and focus level, and the system predicts a suitable subject.
+## 🚀 Features
 
-FEATURES
+- 📌 Add and manage custom subjects  
+- 📝 Log detailed study sessions  
+- 🤖 ML-based subject recommendation  
+- ✅ Validation to prevent unsupported predictions  
+- 📊 Structured database logging (SQLite)  
+- 🎨 Clean and responsive UI  
+- 🔒 Safe and controlled prediction output  
 
-1. Add and manage subjects
+---
 
-2. Log study sessions
+## 🧠 Machine Learning Model
 
-3. ML-based subject recommendation
+The recommendation model was trained using:
 
-4. Validation to prevent unknown subject predictions
+- Mood (1–5)
+- Focus Level (1–5)
+- Perceived Difficulty
+- Hour of Day
+- Weekday
+- Study Duration
 
-5. Clean modal-based UI
+The predicted subject is validated against the user’s managed subject list before being displayed.
 
-6. SQLite database integration
+---
 
-HOW IT WORKS
+## 🏗 Tech Stack
 
-The model was trained using:
-Mood ,Focus level, Perceived difficulty, Hour of day, Weekday, Study duration
+**Backend**
+- Python
+- Flask
 
-The predicted subject is verified against the user’s managed subjects before being displayed.
+**Machine Learning**
+- scikit-learn
+- joblib
 
-TECH STACK
+**Data Processing**
+- Pandas
 
-Python, Flask, scikit-learn, Pandas, SQLite, HTML, CSS
+**Database**
+- SQLite
+
+**Frontend**
+- HTML
+- CSS
+
+---
+
+
+## 🔮 Future Improvements
+
+- Per-user adaptive model training  
+- Enhanced analytics dashboard  
+- Improved recommendation accuracy  
+- Deployment-ready configuration  
+
+---
+
+## 🎯 Learning Outcomes
+
+This project demonstrates:
+
+- Full-stack web development with Flask  
+- Machine learning model integration into a live web application  
+- Feature engineering and prediction pipelines  
+- Database design and session logging  
+- Modular backend architecture  
+
 
