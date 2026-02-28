@@ -27,11 +27,6 @@ body {
 }
 
 /* Center home buttons */
-.home-page-container .home-buttons {
-    justify-content: center;
-}
-
-/* Center home buttons */
 .home-buttons {
     justify-content: center;
 }
@@ -100,28 +95,6 @@ body {
     margin-top: 20px;
 }
 
-.btn {
-    text-decoration: none;
-    padding: 10px 18px;
-    border-radius: 10px;
-    background-color: #7aa6d2;
-    color: white;
-    font-weight: 500;
-    transition: background 0.2s;
-}
-
-.btn:hover {
-    background-color: #6c9ac4;
-}
-
-.btn.secondary {
-    background-color: #ccc;
-    color: #333;
-}
-
-.btn.secondary:hover {
-    background-color: #bbb;
-}
 
 
 /* 🎨 Card */
@@ -291,33 +264,6 @@ input:focus, select:focus, textarea:focus {
     cursor: pointer;
 }
 
-.dashboard-container {
-    max-width: 1000px;
-    margin: auto;
-    padding: 40px 20px;
-}
-
-.dashboard-header {
-    text-align: center;
-    margin-bottom: 40px;
-}
-
-.dashboard-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 30px;
-}
-
-.card {
-    background: #ffffff;
-    padding: 25px;
-    border-radius: 16px;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.06);
-}
-
-.hidden-section {
-    display: none;
-}
 
 .primary-btn {
     background: #4c6ef5;

@@ -1,4 +1,6 @@
-__pycache__/
-*.pyc
 data/study_sessions_db
 *.db
+venv/
+__pycache__/
+*.pyc
+.env
