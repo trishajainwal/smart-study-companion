@@ -1,9 +1,10 @@
 import os
+import sqlite3
 from flask import Flask, render_template, request, redirect, url_for, jsonify 
 import joblib
 import pandas as pd 
 from datetime import datetime
-from src.database import insert_session, get_all_sessions, get_all_subjects, insert_subject
+from src.database import insert_session, get_all_sessions, get_all_subjects, insert_subject, get_connection
 # from src.visualize import subject_distribution, mood_focus_trend
 
 
@@ -48,6 +49,21 @@ def log_session():
     subjects = get_all_subjects()
     return render_template("log_session.html", subjects=subjects)
 
+@app.route("/logs")
+def view_logs():
+    conn = get_connection()
+    conn.row_factory = sqlite3.Row
+    cursor = conn.cursor()
+
+    cursor.execute("""
+        SELECT * FROM study_sessions
+        ORDER BY date DESC, id DESC
+    """)
+
+    logs = cursor.fetchall()
+    conn.close()
+
+    return render_template("logs.html", logs=logs)
 
 @app.route("/suggest-subject", methods=["POST"])
 def suggest_subject():

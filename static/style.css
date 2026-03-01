@@ -296,3 +296,61 @@ input:focus, select:focus, textarea:focus {
     justify-content: space-between;
     margin-top: 8px;
 }
+
+.logs-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-top: 30px;
+}
+
+.log-card {
+    background: white;
+    border-left: 6px solid #456882;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    transition: transform 0.2s ease;
+}
+
+.log-card:hover {
+    transform: translateY(-3px);
+}
+
+.log-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.log-header h3 {
+    margin: 0;
+    color: #456882;
+}
+
+.log-date {
+    font-size: 0.9rem;
+    opacity: 0.7;
+}
+
+.metrics {
+    display: flex;
+    gap: 20px;
+    margin-top: 10px;
+    font-size: 0.9rem;
+    opacity: 0.8;
+}
+
+.goal-section {
+    margin-top: 12px;
+}
+
+.completed {
+    color: green;
+    font-weight: bold;
+}
+
+.not-completed {
+    color: red;
+    font-weight: bold;
+}

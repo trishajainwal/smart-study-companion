@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="page-container">
+    <h1 class="page-title">Study History</h1>
+
+    {% if logs %}
+        <div class="logs-container">
+            {% for log in logs %}
+            <div class="log-card">
+
+                <div class="log-header">
+                    <h3>{{ log.subject }}</h3>
+                    <span class="log-date">{{ log.date }}</span>
+                </div>
+
+                <p><strong>Topic:</strong> {{ log.topic }}</p>
+                <p><strong>Duration:</strong> {{ log.duration_minutes }} mins</p>
+
+                <div class="metrics">
+                    <span>Difficulty: {{ log.perceived_difficulty }}/5</span>
+                    <span>Focus: {{ log.focus_level }}/5</span>
+                    <span>Mood: {{ log.mood }}/5</span>
+                </div>
+
+                <div class="goal-section">
+                    <p><strong>Goal:</strong> {{ log.set_goal }}</p>
+                    {% if log.goal_completed == 1 %}
+                        <span class="completed">✔ Completed</span>
+                    {% else %}
+                        <span class="not-completed">✖ Not Completed</span>
+                    {% endif %}
+                </div>
+
+            </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p>No study sessions logged yet.</p>
+    {% endif %}
+</div>
+
+{% endblock %}
