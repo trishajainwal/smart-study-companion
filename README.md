@@ -55,20 +55,19 @@ The predicted subject is validated against the user’s managed subject list bef
 - CSS
 
 ---
-
 ## 📸 Screenshots
 
-### 🏠 Suggestion card/Home Page
-![Suggest Subject](screenshots\suggestion.png)
+### 🏠 Suggestion Card / Home Page
+![Suggest Subject](screenshots/suggestion.png)
 
 ### 📝 Log Study Session
-![Log Session](screenshots\log_session.png)
+![Log Session](screenshots/log_session.png)
 
 ### 📊 Study History
-![History](screenshots\view_logs.png)
+![History](screenshots/view_logs.png)
 
 ### 📚 Manage Subjects
-![Subjects](screenshots\manage_subjects.png)
+![Subjects](screenshots/manage_subjects.png)
 
 ---
 
@@ -112,4 +111,5 @@ python database.py
 
 # Run application
 python app.py
+
 
